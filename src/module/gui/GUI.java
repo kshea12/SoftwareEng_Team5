@@ -1,3 +1,5 @@
+package module.gui;
+
 import java.awt.EventQueue;
 
 import javax.swing.AbstractAction;

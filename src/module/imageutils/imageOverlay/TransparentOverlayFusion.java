@@ -1,4 +1,5 @@
-package imagefusion;
+package module.imageutils.imageOverlay;
+
 import java.awt.*;
 import java.awt.image.*;
 import java.io.File;
