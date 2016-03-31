@@ -1,5 +1,4 @@
-package module.imageutils.imageOverlay;
-
+package imagefusion;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.File;
@@ -20,8 +19,17 @@ public class TransparentOverlayFusion
        // BufferedImage image1 = ImageIO.read(new File("C:\\Users\\Choyce\\Desktop\\Image Fusion\\mri.jpg"));
        // BufferedImage image2 = ImageIO.read(new File("C:\\Users\\Choyce\\Desktop\\Image Fusion\\ct.jpg"));
         
-        BufferedImage image1 = ImageIO.read(new File("C:\\Users\\Choyce\\Desktop\\Image Fusion\\Example 2 Picture 1.jpg"));
-        BufferedImage image2 = ImageIO.read(new File("C:\\Users\\Choyce\\Desktop\\Image Fusion\\Example 2 Picture 2.jpg"));
+       // BufferedImage image1 = ImageIO.read(new File("C:\\Users\\Choyce\\Desktop\\Image Fusion\\Example 2 Picture 1.jpg"));
+       // BufferedImage image2 = ImageIO.read(new File("C:\\Users\\Choyce\\Desktop\\Image Fusion\\Example 2 Picture 2.jpg"));
+        
+        //BufferedImage image1 = ImageIO.read(new File("C:\\Users\\Choyce\\Desktop\\Image Fusion\\Example 3 Picture 1.jpg"));
+        //BufferedImage image2 = ImageIO.read(new File("C:\\Users\\Choyce\\Desktop\\Image Fusion\\Example 3 Picture 2.jpg"));
+        
+       // BufferedImage image1 = ImageIO.read(new File("C:\\Users\\Choyce\\Desktop\\Image Fusion\\Example 4 Picture 1.jpg"));
+       // BufferedImage image2 = ImageIO.read(new File("C:\\Users\\Choyce\\Desktop\\Image Fusion\\Example 4 Picture 2.jpg"));
+        
+        BufferedImage image1 = ImageIO.read(new File("C:\\Users\\Choyce\\Desktop\\Image Fusion\\Example 5 Picture 1.jpg"));
+        BufferedImage image2 = ImageIO.read(new File("C:\\Users\\Choyce\\Desktop\\Image Fusion\\Example 5 Picture 2.jpg"));
         
         BufferedImage finx = blend(image1,image2,0.1);
         BufferedImage finy = blend(image2,image1,0.1);
@@ -43,7 +51,7 @@ public class TransparentOverlayFusion
         frame.pack();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Thread.sleep(5000);
+
         
         BufferedImage fin2 = blend(image1,image2,0.2);
         JFrame frame2 = new JFrame();
@@ -55,7 +63,7 @@ public class TransparentOverlayFusion
         frame2.pack();
         frame2.setVisible(true);
         frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
         
         BufferedImage fin3 = blend(image1,image2,0.3);
         JFrame frame3 = new JFrame();
@@ -100,7 +108,7 @@ public class TransparentOverlayFusion
         frame6.pack();
         frame6.setVisible(true);
         frame6.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Thread.sleep(5000);
+       // Thread.sleep(5000);
         
         BufferedImage fin7 = blend(image1,image2,0.7);
         JFrame frame7 = new JFrame();
@@ -112,7 +120,7 @@ public class TransparentOverlayFusion
         frame7.pack();
         frame7.setVisible(true);
         frame7.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Thread.sleep(5000);
+       // Thread.sleep(5000);
         
         BufferedImage fin8 = blend(image1,image2,0.8);
         JFrame frame8 = new JFrame();
@@ -124,7 +132,7 @@ public class TransparentOverlayFusion
         frame8.pack();
         frame8.setVisible(true);
         frame8.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
         
         BufferedImage fin9 = blend(image1,image2,0.9);
         JFrame frame9 = new JFrame();
@@ -136,7 +144,7 @@ public class TransparentOverlayFusion
         frame9.pack();
         frame9.setVisible(true);
         frame9.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Thread.sleep(5000);
+       // Thread.sleep(5000);
         
         BufferedImage merge1 = blend(fin,fin9,0.5);
         BufferedImage merge2 = blend(fin2,fin8,0.5);
