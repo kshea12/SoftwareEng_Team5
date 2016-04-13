@@ -1,5 +1,3 @@
-package module.gui;
-
 import java.awt.EventQueue;
 
 import javax.swing.AbstractAction;
@@ -235,6 +233,7 @@ public class GUI {
 		ImageIcon iconNew = new ImageIcon("file_new.gif");
 		Action actionNew = new AbstractAction("New", iconNew) {
 			/**
+			 *  I want this to restart the GUI
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
