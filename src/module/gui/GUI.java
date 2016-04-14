@@ -159,6 +159,8 @@ public class GUI {
 				//pass image1 to image IO
 				getImageFromUser1();
 				setProgBar(33);
+				//****************
+
 				//Thread t = new Thread(new Runnable() {
 					//@Override
 					//public void run() {
@@ -166,6 +168,8 @@ public class GUI {
 					//}
 				//});
 				//t.start();
+
+				//**********************
 			}
 		});
 		frmImageFusion.getContentPane().setLayout(null);
@@ -177,13 +181,7 @@ public class GUI {
 				//pass image2 to image IO
 				getImageFromUser2();
 				setProgBar(66);
-				//Thread t = new Thread(new Runnable() {
-					//@Override
-					//public void run() {
-						setLabelText(lblWaitingForImages, "Image 2 Accepted");
-					//}
-				//});
-				//t.start();
+				setLabelText(lblWaitingForImages, "Image 2 Accepted");
 			}
 		});
 		frmImageFusion.getContentPane().add(btnInputImage2);
