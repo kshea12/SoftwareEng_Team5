@@ -80,7 +80,7 @@ public class ImageFusion
         framey.setVisible(true);
         framey.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //xor
+        /* //original images xor'd
         RenderedOp mergeOriginal = XorDescriptor.create(firstImage, secondImage, key);
         BufferedImage rImageGraphicsMergeOriginal = mergeOriginal.getAsBufferedImage();
         JFrame frameq = new JFrame();
@@ -95,6 +95,7 @@ public class ImageFusion
         frameq.pack();
         frameq.setVisible(true);
         frameq.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        */
 
         //xor
         RenderedOp mergeSubtractions = XorDescriptor.create(subtractImages1, subtractImages2, key);
@@ -181,32 +182,33 @@ public class ImageFusion
     {
         int width = colorReference1.getWidth();
         int height = colorReference1.getHeight();
+        BufferedImage colorized = new BufferedImage(width,height,colorReference1.getType());
 
         for(int i=0; i<height; i++){
 
             for(int j=0; j<width; j++){
 
                 Color c1 = new Color(colorReference1.getRGB(j, i));
-                int red1 = (int)(c1.getRed());
-                int green1 = (int)(c1.getGreen());
-                int blue1 = (int)(c1.getBlue());
+                int red1 = c1.getRed();
+                int green1 = c1.getGreen();
+                int blue1 = c1.getBlue();
                 Color c2 = new Color(colorReference2.getRGB(j, i));
-                int red2 = (int)(c2.getRed());
-                int green2 = (int)(c2.getGreen());
-                int blue2 = (int)(c2.getBlue());
+                int red2 = c2.getRed();
+                int green2 = c2.getGreen();
+                int blue2 = c2.getBlue();
                 red1 = ((red1-red2)/2)+red2;
                 green1 = ((green1-green2)/2)+green2;
                 blue1 = ((blue1-blue2)/2)+blue2;
                 Color newColor = new Color(red1,green1,blue1);
 
-                colorReference1.setRGB(j,i,newColor.getRGB());
+                colorized.setRGB(j,i,newColor.getRGB());
 
                 // 60, 67     60-67= -7     -7/2 = -4    -4+67 = 63
                 // 67, 60     67-60= 7      7/2 = 4       4 + 60 = 64
             }
         }
 
-        return colorReference1;
+        return colorized;
     }
 
 }

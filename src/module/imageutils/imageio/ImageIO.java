@@ -9,8 +9,6 @@ import java.io.IOException;
  */
 public class ImageIO {
 
-    public ImageIO(){};
-
     public static BufferedImage importImage(File imageFile)
     {
         BufferedImage image = null;
