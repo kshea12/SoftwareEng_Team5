@@ -1,3 +1,7 @@
+package module.gui;
+
+import module.controller.Controller;
+
 import java.awt.EventQueue;
 
 import javax.swing.AbstractAction;
@@ -29,6 +33,7 @@ import java.awt.Font;
 
 public class GUI {
 
+    private Controller controller = new Controller();
 	private JFrame frmImageFusion;
 
 	JProgressBar progressBar;
@@ -75,7 +80,8 @@ public class GUI {
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
 		int result = fileChooser.showOpenDialog(frmImageFusion);
 		if (result == JFileChooser.APPROVE_OPTION) {
-			File selectedFile1 = fileChooser.getSelectedFile();
+            controller.getImage1(fileChooser.getSelectedFile());
+			//File selectedFile1 = fileChooser.getSelectedFile();
 			//System.out.println("Selected file: " + selectedFile1.getAbsolutePath());
 		}
 	}
@@ -84,7 +90,8 @@ public class GUI {
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
 		int result = fileChooser.showOpenDialog(frmImageFusion);
 		if (result == JFileChooser.APPROVE_OPTION) {
-			File selectedFile2 = fileChooser.getSelectedFile();
+            controller.getImage2(fileChooser.getSelectedFile());
+			//File selectedFile2 = fileChooser.getSelectedFile();
 			//System.out.println("Selected file: " + selectedFile2.getAbsolutePath());
 		}
 	}
@@ -131,53 +138,55 @@ public class GUI {
 		frmImageFusion.setTitle("Image Fusion");
 		frmImageFusion.setBounds(100, 100, 466, 324);
 		frmImageFusion.getContentPane().setLayout(null);
-		frmImageFusion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+		frmImageFusion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
-		final JRadioButton rdbtnDefaultFusion = new JRadioButton("Default Fusion");
-		final JRadioButton rdbtnUserChoosesBase = new JRadioButton("User Chooses Base Image");
-		JButton btnInputImage = new JButton("Input Image 1");
-		JButton btnInputImage_1 = new JButton("Input Image 2");
+        final JRadioButton rdbtnDefaultFusion = new JRadioButton("Color Images");
+        final JRadioButton rdbtnUserChoosesBase = new JRadioButton("Black & White Images");
+		//final JRadioButton rdbtnDefaultFusion = new JRadioButton("Default Fusion");
+		//final JRadioButton rdbtnUserChoosesBase = new JRadioButton("User Chooses Base Image");
+		JButton btnInputImage1 = new JButton("Input Image 1");
+		JButton btnInputImage2 = new JButton("Input Image 2");
 		JButton btnSaveImage = new JButton("Save Image");
 		JButton btnFuse = new JButton("Fuse");
 		progressBar = new JProgressBar();
+        //lblWaitingForImages = new JLabel();
 
 
-		btnInputImage.setBounds(20, 160, 117, 29);
-		btnInputImage.addActionListener(new java.awt.event.ActionListener() {
+		btnInputImage1.setBounds(20, 160, 117, 29);
+		btnInputImage1.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				//pass image1 to image IO
 				getImageFromUser1();
-				setProgBar(10);
-				Thread t = new Thread(new Runnable() {
-					@Override
-					public void run() {
+				setProgBar(33);
+				//Thread t = new Thread(new Runnable() {
+					//@Override
+					//public void run() {
 						setLabelText(lblWaitingForImages, "Image 1 Accepted");
-					}
-				});
-				t.start();
+					//}
+				//});
+				//t.start();
 			}
 		});
 		frmImageFusion.getContentPane().setLayout(null);
-		frmImageFusion.getContentPane().add(btnInputImage);
+		frmImageFusion.getContentPane().add(btnInputImage1);
 		
-		btnInputImage_1.setBounds(20, 204, 117, 29);
-		btnInputImage_1.addActionListener(new ActionListener() {
+		btnInputImage2.setBounds(20, 204, 117, 29);
+		btnInputImage2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//pass image2 to image IO
 				getImageFromUser2();
-				setProgBar(20);
-				Thread t = new Thread(new Runnable() {
-					@Override
-					public void run() {
+				setProgBar(66);
+				//Thread t = new Thread(new Runnable() {
+					//@Override
+					//public void run() {
 						setLabelText(lblWaitingForImages, "Image 2 Accepted");
-					}
-				});
-				t.start();
+					//}
+				//});
+				//t.start();
 			}
 		});
-		frmImageFusion.getContentPane().add(btnInputImage_1);
+		frmImageFusion.getContentPane().add(btnInputImage2);
 		rdbtnDefaultFusion.setBounds(55, 33, 141, 23);
 
 		rdbtnDefaultFusion.setToolTipText("Chooses the larger file as the base image.");
@@ -211,6 +220,15 @@ public class GUI {
 		lblFusionProgress.setHorizontalAlignment(SwingConstants.CENTER);
 		frmImageFusion.getContentPane().add(lblFusionProgress);
 		btnFuse.setBounds(307, 160, 117, 29);
+        btnFuse.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //fuse image1 and image2
+                setProgBar(100);
+                controller.fuseImages();
+                setLabelText(lblWaitingForImages, "Images Fused");
+            }
+        });
+
 		frmImageFusion.getContentPane().add(btnFuse);
 
 		JLabel lblStatus = new JLabel("Status:");
@@ -218,11 +236,11 @@ public class GUI {
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		frmImageFusion.getContentPane().add(lblStatus);
 
-		JLabel lblStatusUpdate = new JLabel("Waiting For Images");
-		lblStatusUpdate.setToolTipText("Current Status");
-		lblStatusUpdate.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStatusUpdate.setBounds(153, 217, 146, 16);
-		frmImageFusion.getContentPane().add(lblStatusUpdate);
+		lblWaitingForImages = new JLabel("Waiting For Images");
+		lblWaitingForImages.setToolTipText("Current Status");
+		lblWaitingForImages.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWaitingForImages.setBounds(153, 217, 146, 16);
+		frmImageFusion.getContentPane().add(lblWaitingForImages);
 
 		JMenuBar menuBar = new JMenuBar();
 		frmImageFusion.setJMenuBar(menuBar);
