@@ -3,10 +3,6 @@ package module.imageutils.imagefusion;
 import java.awt.*;
 import java.awt.image.*;
 import javax.media.jai.*;
-import javax.media.jai.operator.BandMergeDescriptor;
-import javax.media.jai.operator.ColorConvertDescriptor;
-import javax.media.jai.operator.InvertDescriptor;
-import javax.media.jai.operator.OverlayDescriptor;
 import javax.media.jai.operator.SubtractDescriptor;
 import javax.media.jai.operator.XorDescriptor;
 import javax.swing.*;
@@ -15,13 +11,9 @@ import javax.swing.*;
 public class ImageFusion
 {
 
-
     public static void fuseImages(BufferedImage image1, BufferedImage image2)
     {
-        // image1 = GrayScale(image1);
-        // image2 = GrayScale(image2);
-
-        BufferedImage result = Colorize(image1,image2);
+        BufferedImage result = colorize(image1,image2);
 
         JFrame framej = new JFrame();
         framej.getContentPane().setLayout(new FlowLayout());
@@ -80,23 +72,6 @@ public class ImageFusion
         framey.setVisible(true);
         framey.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        /* //original images xor'd
-        RenderedOp mergeOriginal = XorDescriptor.create(firstImage, secondImage, key);
-        BufferedImage rImageGraphicsMergeOriginal = mergeOriginal.getAsBufferedImage();
-        JFrame frameq = new JFrame();
-        frameq.getContentPane().setLayout(new FlowLayout());
-        frameq.getContentPane().add(new JLabel("4"));
-        frameq.getContentPane().add(new JLabel("THIS"));
-        frameq.getContentPane().add(new JLabel(new ImageIcon(image1)));
-        frameq.getContentPane().add(new JLabel("XOR WITH"));
-        frameq.getContentPane().add(new JLabel(new ImageIcon(image2)));
-        frameq.getContentPane().add(new JLabel("EQUALS"));
-        frameq.getContentPane().add(new JLabel(new ImageIcon(rImageGraphicsMergeOriginal)));
-        frameq.pack();
-        frameq.setVisible(true);
-        frameq.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        */
-
         //xor
         RenderedOp mergeSubtractions = XorDescriptor.create(subtractImages1, subtractImages2, key);
         //RenderedOp coloredSubs = ColorConvertDescriptor.create((RenderedImage)mergeSubtractions,firstImage.getColorModel(),null);
@@ -116,21 +91,6 @@ public class ImageFusion
         framez.pack();
         framez.setVisible(true);
         framez.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //xor
-       /* RenderedOp mergeSubtractions2 = XorDescriptor.create(mergeSubtractions, mergeOriginal, key);
-        BufferedImage rImageGraphicsMergeSubtractions2 = mergeSubtractions2.getAsBufferedImage();
-        JFrame framek = new JFrame();
-        framek.getContentPane().setLayout(new FlowLayout());
-        framek.getContentPane().add(new JLabel("THIS"));
-        framek.getContentPane().add(new JLabel(new ImageIcon(rImageGraphicsMergeSubtractions)));
-        framek.getContentPane().add(new JLabel("XOR WITH"));
-        framek.getContentPane().add(new JLabel(new ImageIcon(rImageGraphicsMergeOriginal)));
-        framek.getContentPane().add(new JLabel("EQUALS"));
-        framek.getContentPane().add(new JLabel(new ImageIcon(rImageGraphicsMergeSubtractions2)));
-        framek.pack();
-        framek.setVisible(true);
-        framek.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
     }
 
     public static ColorModel findColorModel(BufferedImage src)
@@ -150,35 +110,7 @@ public class ImageFusion
         return cm;
     }
 
-    public static BufferedImage GrayScale(BufferedImage image)
-    {
-        try {
-            int width = image.getWidth();
-            int height = image.getHeight();
-
-            for(int i=0; i<height; i++){
-
-                for(int j=0; j<width; j++){
-
-                    Color c = new Color(image.getRGB(j, i));
-                    int red = (int)(c.getRed() * 0.299);
-                    int green = (int)(c.getGreen() * 0.587);
-                    int blue = (int)(c.getBlue() *0.114);
-                    Color newColor = new Color(red+green+blue,
-
-                            red+green+blue,red+green+blue);
-
-                    image.setRGB(j,i,newColor.getRGB());
-                }
-            }
-
-            return image;
-
-        } catch (Exception e) {}
-        return null;
-    }
-
-    public static BufferedImage Colorize(BufferedImage colorReference1,BufferedImage colorReference2)
+    public static BufferedImage colorize(BufferedImage colorReference1,BufferedImage colorReference2)
     {
         int width = colorReference1.getWidth();
         int height = colorReference1.getHeight();
