@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="ImageFusion:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ImageFusion_jar</output-path>
+    <root id="archive" name="ImageFusion.jar">
+      <element id="module-output" name="ImageFusion" />
+    </root>
+  </artifact>
+</component>
