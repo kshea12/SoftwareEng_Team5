@@ -134,7 +134,7 @@ public class ImageFusion
             for(int j=0; j<width; j++){
                 Color c1 = new Color(colorReference1.getRGB(j, i));
                 int red1 = c1.getRed();
-                int grhttp://marketplace.eclipse.org/marketplace-client-intro?mpc_install=27025een1 = c1.getGreen();
+                int green1 = c1.getGreen();
                 int blue1 = c1.getBlue();
                 Color c2 = new Color(colorReference2.getRGB(j, i));
                 int red2 = c2.getRed();
