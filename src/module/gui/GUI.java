@@ -74,12 +74,24 @@ public class GUI {
 		}
 	}
 
-	public void getImage2FromUser(){
+	public File getImageFromUser(){
+		File imageFile = new File("");
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
 		int result = fileChooser.showOpenDialog(frmImageFusion);
 		if (result == JFileChooser.APPROVE_OPTION) {
-            controller.getImage2(fileChooser.getSelectedFile());
+			imageFile = fileChooser.getSelectedFile();
 		}
+		return imageFile;
+	}
+
+	public File getSavePath(){
+		File imageFile = new File("");
+		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+		int result = fileChooser.showSaveDialog(frmImageFusion);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			imageFile = fileChooser.getSelectedFile();
+		}
+		return imageFile;
 	}
 	
 	public boolean isHighlightedChecked(){
@@ -127,7 +139,7 @@ public class GUI {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				//pass image1 to image IO
-				getImage1FromUser();
+				controller.getImage1(getImageFromUser());
 				setProgBar(33);
 				setLabelText(lblWaitingForImages, "Image 1 Accepted");
 			}
@@ -139,7 +151,7 @@ public class GUI {
 		btnInputImage2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//pass image2 to image IO
-				getImage2FromUser();
+				controller.getImage2(getImageFromUser());
 				setProgBar(66);
 				setLabelText(lblWaitingForImages, "Image 2 Accepted");
 			}
@@ -169,7 +181,15 @@ public class GUI {
 		rdbtnUserChoosesBase.setToolTipText("You decide which image will be the base image");
 		frmImageFusion.getContentPane().add(rdbtnUserChoosesBase);
 		btnSaveImage.setBounds(307, 204, 117, 29);
+		btnSaveImage.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.saveImage(getSavePath());
+                setLabelText(lblWaitingForImages, "Saved Fused Image");
+			}
+		});
 		frmImageFusion.getContentPane().add(btnSaveImage);
+
 		progressBar.setBounds(153, 134, 146, 20);
 		frmImageFusion.getContentPane().add(progressBar);
 
@@ -186,7 +206,6 @@ public class GUI {
                 setLabelText(lblWaitingForImages, "Images Fused");
             }
         });
-
 		frmImageFusion.getContentPane().add(btnFuse);
 
 		JLabel lblStatus = new JLabel("Status:");

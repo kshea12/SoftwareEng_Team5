@@ -22,4 +22,16 @@ public class ImageIO {
 
         return image;
     }
+
+    public static void exportImage(BufferedImage outputImage, File outputFilePath)
+    {
+        try {
+            javax.imageio.ImageIO.write(outputImage, "jpg", outputFilePath);
+        }
+
+        catch (IOException e) {
+            //handle error
+        }
+    }
 }
+

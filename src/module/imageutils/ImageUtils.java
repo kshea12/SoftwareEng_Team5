@@ -13,14 +13,10 @@ import java.io.File;
  */
 public class ImageUtils implements ImageFusionInterface, ImageIOInterface {
 
-    public void fuseImages(BufferedImage image1, BufferedImage image2)
-    {
-        ImageFusion.fuseImages(image1,image2);
-    }
+    public BufferedImage fuseImages(BufferedImage image1, BufferedImage image2) { return ImageFusion.fuseImages(image1,image2); }
 
-    public BufferedImage importImage(File imageFile)
-    {
-        return ImageIO.importImage(imageFile);
-    }
+    public BufferedImage importImage(File imageFile) { return ImageIO.importImage(imageFile); }
+
+    public void exportImage(BufferedImage outputImage, File outputFilePath) { ImageIO.exportImage(outputImage, outputFilePath); }
 
 }

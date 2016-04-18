@@ -7,6 +7,6 @@ import java.awt.image.BufferedImage;
  */
 public interface ImageFusionInterface {
 
-    void fuseImages(BufferedImage image1, BufferedImage image2);
+    BufferedImage fuseImages(BufferedImage image1, BufferedImage image2);
 
 }

@@ -10,5 +10,6 @@ import java.io.IOException;
 public interface ImageIOInterface {
 
      BufferedImage importImage(File imageFile);
+     void exportImage(BufferedImage outputImage, File outputFilePath);
 
 }

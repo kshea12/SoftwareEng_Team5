@@ -11,28 +11,28 @@ public class Controller {
 
     private BufferedImage image1;
     private BufferedImage image2;
+    private BufferedImage fusedImage;
     private ImageUtils imageUtils;
 
     public Controller()
     {
         image1 = null;
         image2 = null;
+        fusedImage = null;
         imageUtils = new ImageUtils();
     };
 
-    public void getImage1(File image) {
-        image1 = imageUtils.importImage(image);
-    }
+    public void getImage1(File image) { image1 = imageUtils.importImage(image); }
 
-    public void getImage2(File image) {
-        image2 = imageUtils.importImage(image);
-    }
+    public void getImage2(File image) { image2 = imageUtils.importImage(image); }
 
     public void fuseImages() {
         if (image1 != null && image2 != null)
-            imageUtils.fuseImages(image1, image2);
-        else
-            ;//handle error by returning a bool
+            fusedImage = imageUtils.fuseImages(image1, image2);
     }
 
+    public void saveImage(File selectedPath) {
+        if (fusedImage != null)
+            imageUtils.exportImage(fusedImage, selectedPath);
+    }
 }
