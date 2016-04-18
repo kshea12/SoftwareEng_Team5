@@ -11,6 +11,11 @@ import javax.swing.*;
 public class ImageFusion
 {
 
+	/*
+	 * fuse images takes two images as input and displays a fused image that is created with the colorize method.
+	 * @param image1 the first image you wish to fuse
+	 * @param image2 the second image you wish to fuse
+	 */
     public static void fuseImages(BufferedImage image1, BufferedImage image2)
     {
         BufferedImage result = colorize(image1,image2);
@@ -93,6 +98,7 @@ public class ImageFusion
         framez.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    //*************APPEARS TO BE NOT IN USE ****************
     public static ColorModel findColorModel(BufferedImage src)
     {
         if (src instanceof BufferedImage) {
@@ -110,6 +116,13 @@ public class ImageFusion
         return cm;
     }
 
+    /** colorize takes two images as input and returns a colorized image that is constructed by finding the median RGB value 
+     * between a pixel in the first image and a pixel in the same location in pixel two. That median RGB value is then stored
+     * as the RGB value of the corresponding pixel in the colorized image. The colorized image is returned after it is finished.
+     * @param colorReference1 the first image to be colorized
+     * @param colorReference2 the second image to be colorized
+     * @return a colorized image created as explained by the description for this method
+     */
     public static BufferedImage colorize(BufferedImage colorReference1,BufferedImage colorReference2)
     {
         int width = colorReference1.getWidth();
@@ -119,10 +132,9 @@ public class ImageFusion
         for(int i=0; i<height; i++){
 
             for(int j=0; j<width; j++){
-
                 Color c1 = new Color(colorReference1.getRGB(j, i));
                 int red1 = c1.getRed();
-                int green1 = c1.getGreen();
+                int grhttp://marketplace.eclipse.org/marketplace-client-intro?mpc_install=27025een1 = c1.getGreen();
                 int blue1 = c1.getBlue();
                 Color c2 = new Color(colorReference2.getRGB(j, i));
                 int red2 = c2.getRed();
@@ -142,6 +154,5 @@ public class ImageFusion
 
         return colorized;
     }
-
 }
 
