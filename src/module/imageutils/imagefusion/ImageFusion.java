@@ -7,7 +7,12 @@ import javax.media.jai.operator.SubtractDescriptor;
 import javax.media.jai.operator.XorDescriptor;
 import javax.swing.*;
 
-
+/**
+* This class provides one algorithm we have implemented to fuse two images together. This specific algorithm
+* takes the RGB pixel value from two images, finds the median of those two pixels and then uses that as the RGB
+* value of the corresponding pixel in the fused image. This algorithm could theorehtically be expanded upon to
+* be able to work with more than two images should that be required.
+*/
 public class ImageFusion
 {
 

@@ -9,6 +9,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 /**
+ * This class purpose is to provide encapsulate all imageutilities such as IO and fusion into one class.
+ * An imageutils object will be able to perform all functions of all developed interfaces that involve image
+ * processing.
  * Created by kshea12 on 4/14/16.
  */
 public class ImageUtils implements ImageFusionInterface, ImageIOInterface {

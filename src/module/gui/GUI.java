@@ -27,23 +27,20 @@ import javax.swing.JFileChooser;
 import java.io.File;
 import java.util.ArrayList;
 
-
+/**
+ * The current GUI class for our software. Communicates with the controller via actionlisteners. The "view"
+ * of this software's MVC design pattern.
+ */
 public class GUI {
 
     private Controller controller = new Controller();
 	private JFrame frmImageFusion;
-
-	JProgressBar progressBar;
-
-	JFileChooser fileChooser = new JFileChooser();
-
-	JLabel lblWaitingForImages;
-
-	File selectedFile1;
-	File selectedFile2;
-
+	private JProgressBar progressBar;
+	private JFileChooser fileChooser = new JFileChooser();
+	private JLabel lblWaitingForImages;
 	final JRadioButton rdbtnDefaultFusion = new JRadioButton("Standard Fused Image");
 	final JRadioButton rdbtnUserChoosesBase = new JRadioButton("Highlighted Fused Image");
+
 
 	JButton btnInputImage1 = new JButton("Input Image 1");
 	JButton btnInputImage2 = new JButton("Input Image 2");

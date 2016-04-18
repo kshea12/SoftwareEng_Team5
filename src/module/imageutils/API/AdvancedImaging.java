@@ -17,6 +17,9 @@ import java.math.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
+/**
+ * This class current purpose is for image fusion testing. It utilizes Java's advanced imaging API.
+ */
 public class AdvancedImaging 
 {
     public static void main(String[] args) throws IOException, InterruptedException 

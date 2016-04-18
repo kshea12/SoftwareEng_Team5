@@ -9,6 +9,9 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 /**
+ * This is another image fusion algorithm that was being tested. It currently is not being used.
+ * The algorithm involves overlapping two images and weighting their pixel color values to create a fused image.
+ * Source: http://www.informit.com/articles/article.aspx?p=1245201&seqNum=2
  *
  * http://www.informit.com/articles/article.aspx?p=1245201&seqNum=2
  */

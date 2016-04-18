@@ -5,6 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 /**
+ * The controller's purpose is provide an interface between the view (GUI) and the model (image utilities).
+ * The user interacts with the GUI which sends a signal to the controller which has access to image utilities
+ * which includes services like I/O and fusion. This software follows the MVC design pattern.
  * Created by kshea12 on 3/22/16.
  */
 public class Controller {

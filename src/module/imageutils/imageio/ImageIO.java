@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
+ * The purpose of this class is provide imageIO services for the software.
  * Created by kshea12 on 3/22/16.
  */
 public class ImageIO {
