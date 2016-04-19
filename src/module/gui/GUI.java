@@ -63,14 +63,6 @@ public class GUI {
 		});
 	}
 
-	public void getImage1FromUser(){
-		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-		int result = fileChooser.showOpenDialog(frmImageFusion);
-		if (result == JFileChooser.APPROVE_OPTION) {
-            controller.getImage1(fileChooser.getSelectedFile());
-		}
-	}
-
 	public File getImageFromUser(){
 		File imageFile = new File("");
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
