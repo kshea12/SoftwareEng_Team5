@@ -24,6 +24,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -37,6 +38,7 @@ public class GUI {
 	private JFrame frmImageFusion;
 	private JProgressBar progressBar;
 	private JFileChooser fileChooser = new JFileChooser();
+	private FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
 	private JLabel lblWaitingForImages;
 	final JRadioButton rdbtnDefaultFusion = new JRadioButton("Standard Fused Image");
 	final JRadioButton rdbtnUserChoosesBase = new JRadioButton("Highlighted Fused Image");
@@ -112,6 +114,7 @@ public class GUI {
 	 */
 	private void initialize() {
 
+		fileChooser.setFileFilter(filter);
 		frmImageFusion = new JFrame();
 		frmImageFusion.setTitle("Image Fusion");
 		frmImageFusion.setBounds(100, 100, 466, 324);
