@@ -17,13 +17,12 @@ public class Controller {
     private BufferedImage fusedImage;
     private ImageUtils imageUtils;
 
-    public Controller()
-    {
+    public Controller() {
         image1 = null;
         image2 = null;
         fusedImage = null;
         imageUtils = new ImageUtils();
-    };
+    }
 
     public void getImage1(File image) { image1 = imageUtils.importImage(image); }
 

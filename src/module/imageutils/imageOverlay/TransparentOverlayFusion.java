@@ -160,7 +160,7 @@ public class TransparentOverlayFusion
         JFrame frame99 = new JFrame();
         frame99.getContentPane().setLayout(new FlowLayout());
         frame99.getContentPane().add(new JLabel("Final Merge of Merges"));
-        frame99.getContentPane().add(new JLabel(new ImageIcon(merge7)));;
+        frame99.getContentPane().add(new JLabel(new ImageIcon(merge7)));
         frame99.pack();
         frame99.setVisible(true);
         frame99.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

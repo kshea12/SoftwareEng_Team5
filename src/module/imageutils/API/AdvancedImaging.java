@@ -61,13 +61,13 @@ public class AdvancedImaging
         //draw the Image (image) into the BufferedImage (bImage)
         bImageGraphics.drawImage(image1, null, null);
         // cast it to rendered image
-        RenderedImage firstImage = (RenderedImage)image1;
+        RenderedImage firstImage = image1;
         
         Graphics2D aImageGraphics = image2.createGraphics();
         //draw the Image (image) into the BufferedImage (bImage)
         aImageGraphics.drawImage(image2, null, null);
         // cast it to rendered image
-        RenderedImage secondImage = (RenderedImage)image2;
+        RenderedImage secondImage = image2;
         
         RenderingHints key = new RenderingHints( RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
         
@@ -153,7 +153,7 @@ public class AdvancedImaging
     public static ColorModel findColorModel(BufferedImage src) 
     {
     if (src instanceof BufferedImage) {
-      BufferedImage bimage = (BufferedImage) src;
+      BufferedImage bimage = src;
       System.out.println(bimage.getColorModel().getNumColorComponents());
     }
 
@@ -205,13 +205,13 @@ public class AdvancedImaging
             for(int j=0; j<width; j++){
             
                Color c1 = new Color(colorReference1.getRGB(j, i));
-               int red1 = (int)(c1.getRed());
-               int green1 = (int)(c1.getGreen());
-               int blue1 = (int)(c1.getBlue());
+               int red1 = c1.getRed();
+               int green1 = c1.getGreen();
+               int blue1 = c1.getBlue();
                Color c2 = new Color(colorReference2.getRGB(j, i));
-               int red2 = (int)(c2.getRed());
-               int green2 = (int)(c2.getGreen());
-               int blue2 = (int)(c2.getBlue());
+               int red2 = c2.getRed();
+               int green2 = c2.getGreen();
+               int blue2 = c2.getBlue();
                red1 = ((red1-red2)/2)+red2;
                green1 = ((green1-green2)/2)+green2;
                blue1 = ((blue1-blue2)/2)+blue2;
