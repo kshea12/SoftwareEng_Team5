@@ -2,9 +2,6 @@ package module.imageutils.imagefusion;
 
 import java.awt.*;
 import java.awt.image.*;
-import javax.media.jai.*;
-import javax.media.jai.operator.SubtractDescriptor;
-import javax.media.jai.operator.XorDescriptor;
 import javax.swing.*;
 
 /**
@@ -24,23 +21,30 @@ public class ImageFusion
 	 */
     public static BufferedImage fuseImages(BufferedImage image1, BufferedImage image2)
     {
-        BufferedImage result = colorize2(image1,image2);
+        BufferedImage standard = colorize(image1, image2);
+        BufferedImage highlight = highlight(image1, image2);
 
-        JFrame framej = new JFrame();
-        framej.getContentPane().setLayout(new FlowLayout());
-        framej.getContentPane().add(new JLabel("1"));
-        framej.getContentPane().add(new JLabel("THIS"));
-        framej.getContentPane().add(new JLabel(new ImageIcon(image1)));
-        framej.getContentPane().add(new JLabel("COLORIZED WITH"));
-        framej.getContentPane().add(new JLabel(new ImageIcon(image2)));
-        framej.getContentPane().add(new JLabel("EQUALS"));
-        framej.getContentPane().add(new JLabel(new ImageIcon(result)));
-        framej.pack();
-        framej.setVisible(true);
-        framej.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JFrame frame1 = new JFrame();
+        frame1.getContentPane().setLayout(new FlowLayout());
+        frame1.getContentPane().add(new JLabel("IMAGE 1"));
+        frame1.getContentPane().add(new JLabel(new ImageIcon(image1)));
+        frame1.getContentPane().add(new JLabel("IMAGE 2"));
+        frame1.getContentPane().add(new JLabel(new ImageIcon(image2)));
+        frame1.pack();
+        frame1.setVisible(true);
+        frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        JFrame frame2 = new JFrame();
+        frame2.getContentPane().setLayout(new FlowLayout());
+        frame2.getContentPane().add(new JLabel("Standard"));
+        frame2.getContentPane().add(new JLabel(new ImageIcon(standard)));
+        frame2.getContentPane().add(new JLabel("Highlighted"));
+        frame2.getContentPane().add(new JLabel(new ImageIcon(highlight)));
+        frame2.pack();
+        frame2.setVisible(true);
+        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        return result;
+        return standard;
     }
 
     /**
@@ -84,7 +88,7 @@ public class ImageFusion
         return colorized;
     }
 
-    public static BufferedImage colorize2(BufferedImage colorReference1,BufferedImage colorReference2)
+    public static BufferedImage highlight(BufferedImage colorReference1, BufferedImage colorReference2)
     {
         int width = colorReference1.getWidth();
         int height = colorReference1.getHeight();
@@ -118,12 +122,8 @@ public class ImageFusion
 
                 Color newColor = new Color(red,green,blue);
                 colorized.setRGB(j,i,newColor.getRGB());
-
-                // 60, 67     60-67= -7     -7/2 = -4    -4+67 = 63
-                // 67, 60     67-60= 7      7/2 = 4       4 + 60 = 64
             }
         }
-
         return colorized;
     }
 
