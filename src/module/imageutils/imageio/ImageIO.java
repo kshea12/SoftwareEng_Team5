@@ -6,7 +6,6 @@ import java.io.IOException;
 
 /**
  * The purpose of this class is provide imageIO services for the software.
- * Created by kshea12 on 3/22/16.
  */
 public class ImageIO {
 
@@ -18,7 +17,7 @@ public class ImageIO {
         }
 
         catch (IOException e){
-            //handle error
+            e.printStackTrace();
         }
 
         return image;
@@ -31,7 +30,7 @@ public class ImageIO {
         }
 
         catch (IOException e) {
-            //handle error
+            e.printStackTrace();
         }
     }
 }

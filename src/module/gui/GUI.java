@@ -5,9 +5,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 /**
@@ -17,20 +16,20 @@ import java.io.File;
 public class GUI {
 
     private Controller controller;
+    private BufferedImage[] images;
 	private JFrame frame;
     private JMenuBar menuBar;
 	private JFileChooser fileChooser;
 	private FileNameExtensionFilter filter;
-	private JRadioButton standardRadioButton;
-	private JRadioButton highlightRadioButton;
     private JProgressBar progressBar;
     private JLabel progressLabel;
     private JLabel statusLabel;
     private JLabel currentStatusLabel;
 	private JButton image1Button;
 	private JButton image2Button;
-	private JButton saveButton;
 	private JButton fuseButton;
+    private JButton saveStandardButton;
+    private JButton saveHighlightButton;
 
 	/**
 	 * Launch the application.
@@ -67,17 +66,16 @@ public class GUI {
     private void initializeComponents() {
         frame = new JFrame();
         fileChooser = new JFileChooser();
-        filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
-        standardRadioButton = new JRadioButton("Standard Fused Image");
-        highlightRadioButton = new JRadioButton("Highlighted Fused Image");
+        filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg", "tiff");
         progressBar = new JProgressBar();
         progressLabel = new JLabel("Fusion Progress");
         statusLabel = new JLabel("Status:");
         currentStatusLabel = new JLabel("Waiting For Images");
         image1Button = new JButton("Input Image 1");
         image2Button = new JButton("Input Image 2");
-        saveButton = new JButton("Save Image");
         fuseButton = new JButton("Fuse");
+        saveStandardButton = new JButton("Save Standard");
+        saveHighlightButton = new JButton("Save Highlight");
         menuBar = new JMenuBar();
     }
 
@@ -88,47 +86,41 @@ public class GUI {
         // Main Frame
         frame.setJMenuBar(menuBar);
         frame.setTitle("Image Fusion");
-        frame.setBounds(100, 100, 466, 324);
+        frame.setBounds(100, 100, 466, 254);
         frame.getContentPane().setLayout(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // Standard Radio Button
-        standardRadioButton.setBounds(55, 33, 197, 23);
-        standardRadioButton.setToolTipText("This provides a standard fused image.");
-        standardRadioButton.setSelected(true);
-
-        // Highlight Radio Button
-        highlightRadioButton.setBounds(55, 68, 197, 23);
-        highlightRadioButton.setToolTipText("This highlights the significant differences.");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // File Chooser
         fileChooser.setFileFilter(filter);
 
         // Image 1 Button
-        image1Button.setBounds(20, 160, 117, 29);
+        image1Button.setBounds(20, 70, 117, 29);
 
         // Image 2 Button
-        image2Button.setBounds(20, 204, 117, 29);
+        image2Button.setBounds(20, 114, 117, 29);
 
         // Fuse Button
-        fuseButton.setBounds(307, 160, 117, 29);
+        fuseButton.setBounds(166, 156, 117, 29);
 
-        // Save Button
-        saveButton.setBounds(307, 204, 117, 29);
+        // Save Standard Button
+        saveStandardButton.setBounds(307, 70, 117, 29);
 
-        // Progress Bar
-        progressBar.setBounds(153, 134, 146, 20);
+        // Save Highlighted Button
+        saveHighlightButton.setBounds(307, 114, 117, 29);
 
         // Progress Label
-        progressLabel.setBounds(171, 119, 109, 16);
+        progressLabel.setBounds(171, 24, 109, 16);
         progressLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
+        // Progress Bar
+        progressBar.setBounds(153, 41, 146, 20);
+
         // Status Label
-        statusLabel.setBounds(204, 182, 43, 16);
+        statusLabel.setBounds(204, 80, 43, 16);
         statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         // Update Status Label
-        currentStatusLabel.setBounds(153, 217, 146, 16);
+        currentStatusLabel.setBounds(153, 115, 146, 16);
         currentStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
         currentStatusLabel.setToolTipText("Current Status");
     }
@@ -137,26 +129,20 @@ public class GUI {
      * Sets up and adds a listener to every button.
      */
     private void setupListeners() {
-        // Standard Radio Button
-        standardRadioButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) { highlightRadioButton.setSelected(false); }
-        });
-
-        // Highlight Radio Button
-        highlightRadioButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) { standardRadioButton.setSelected(false); }
-        });
-
         // Image 1 Button
         image1Button.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //pass image1 to controller
-                controller.getImage1(getImageFromUser());
-                progressBar.setValue(33);
-                currentStatusLabel.setText("Image 1 Accepted");
+                File imageFile = getImageFromUser();
+                if (imageFile != null) {
+                    controller.getImage1(imageFile);
+                    int progressValue = progressBar.getValue();
+                    progressBar.setValue(progressValue + 33);
+                    currentStatusLabel.setText("Image 1 Accepted");
+                }
+                else
+                    currentStatusLabel.setText("Image 1 Cancelled");
             }
         });
 
@@ -164,9 +150,15 @@ public class GUI {
         image2Button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //pass image2 to controller
-                controller.getImage2(getImageFromUser());
-                progressBar.setValue(66);
-                currentStatusLabel.setText("Image 2 Accepted");
+                File imageFile = getImageFromUser();
+                if (imageFile != null) {
+                    controller.getImage2(imageFile);
+                    int progressValue = progressBar.getValue();
+                    progressBar.setValue(progressValue + 33);
+                    currentStatusLabel.setText("Image 2 Accepted");
+                }
+                else
+                    currentStatusLabel.setText("Image 2 Cancelled");
             }
         });
 
@@ -174,18 +166,51 @@ public class GUI {
         fuseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //fuse image1 and image2
-                controller.fuseImages();
-                progressBar.setValue(100);
-                currentStatusLabel.setText("Images Fused");
+                images = controller.fuseImages();
+                if (images != null) {
+                    displayOriginal(images[0], images[1]);
+                    displayFusion(images[2], images[3]);
+                    progressBar.setValue(100);
+                    currentStatusLabel.setText("Images Fused");
+                }
+                else
+                    currentStatusLabel.setText("Select Two Images");
             }
         });
 
-        // Save Button
-        saveButton.addActionListener(new ActionListener() {
+        // Save Standard Button
+        saveStandardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.saveImage(getSavePath());
-                currentStatusLabel.setText("Saved Fused Image");
+                if (images != null) {
+                    File imageFile = getSavePath();
+                    if (imageFile != null) {
+                        controller.saveImage(images[2], imageFile);
+                        currentStatusLabel.setText("Saved Standard Image");
+                    }
+                    else
+                        currentStatusLabel.setText("Cancelled Saving");
+                }
+                else
+                    currentStatusLabel.setText("Fuse Before Saving");
+            }
+        });
+
+        // Save Highlight Button
+        saveHighlightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (images != null) {
+                    File imageFile = getSavePath();
+                    if (imageFile != null) {
+                        controller.saveImage(images[3], imageFile);
+                        currentStatusLabel.setText("Saved Highlight Image");
+                    }
+                    else
+                        currentStatusLabel.setText("Cancelled Saving");
+                }
+                else
+                    currentStatusLabel.setText("Fuse Before Saving");
             }
         });
     }
@@ -197,12 +222,11 @@ public class GUI {
         Container contentPane = frame.getContentPane();
         contentPane.add(image1Button);
         contentPane.add(image2Button);
-        contentPane.add(standardRadioButton);
-        contentPane.add(highlightRadioButton);
-        contentPane.add(saveButton);
+        contentPane.add(fuseButton);
+        contentPane.add(saveStandardButton);
+        contentPane.add(saveHighlightButton);
         contentPane.add(progressBar);
         contentPane.add(progressLabel);
-        contentPane.add(fuseButton);
         contentPane.add(statusLabel);
         contentPane.add(currentStatusLabel);
     }
@@ -238,7 +262,7 @@ public class GUI {
      * @return the user selected image file
      */
     private File getImageFromUser() {
-        File imageFile = new File("");
+        File imageFile = null;
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fileChooser.showOpenDialog(frame);
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -252,12 +276,36 @@ public class GUI {
      * @return the user selected file path
      */
     private File getSavePath() {
-        File imageFile = new File("");
+        File imageFile = null;
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fileChooser.showSaveDialog(frame);
         if (result == JFileChooser.APPROVE_OPTION) {
             imageFile = fileChooser.getSelectedFile();
         }
         return imageFile;
+    }
+
+    private void displayOriginal(BufferedImage image1, BufferedImage image2) {
+        JFrame frame1 = new JFrame();
+        frame1.getContentPane().setLayout(new FlowLayout());
+        frame1.getContentPane().add(new JLabel("IMAGE 1"));
+        frame1.getContentPane().add(new JLabel(new ImageIcon(image1)));
+        frame1.getContentPane().add(new JLabel("IMAGE 2"));
+        frame1.getContentPane().add(new JLabel(new ImageIcon(image2)));
+        frame1.pack();
+        frame1.setVisible(true);
+        frame1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    private void displayFusion(BufferedImage standard, BufferedImage highlighted) {
+        JFrame frame2 = new JFrame();
+        frame2.getContentPane().setLayout(new FlowLayout());
+        frame2.getContentPane().add(new JLabel("Standard"));
+        frame2.getContentPane().add(new JLabel(new ImageIcon(standard)));
+        frame2.getContentPane().add(new JLabel("Highlight"));
+        frame2.getContentPane().add(new JLabel(new ImageIcon(highlighted)));
+        frame2.pack();
+        frame2.setVisible(true);
+        frame2.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 }

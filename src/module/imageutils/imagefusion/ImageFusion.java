@@ -19,32 +19,15 @@ public class ImageFusion
 	 * @param image2 the second image you wish to fuse
      * @return the final fused image
 	 */
-    public static BufferedImage fuseImages(BufferedImage image1, BufferedImage image2)
+    public static BufferedImage[] fuseImages(BufferedImage image1, BufferedImage image2)
     {
-        BufferedImage standard = colorize(image1, image2);
-        BufferedImage highlight = highlight(image1, image2);
+        BufferedImage[] images = new BufferedImage[4];
+        images[0] = image1;
+        images[1] = image2;
+        images[2] = colorize(image1, image2);
+        images[3] = highlight(image1, image2);
 
-        JFrame frame1 = new JFrame();
-        frame1.getContentPane().setLayout(new FlowLayout());
-        frame1.getContentPane().add(new JLabel("IMAGE 1"));
-        frame1.getContentPane().add(new JLabel(new ImageIcon(image1)));
-        frame1.getContentPane().add(new JLabel("IMAGE 2"));
-        frame1.getContentPane().add(new JLabel(new ImageIcon(image2)));
-        frame1.pack();
-        frame1.setVisible(true);
-        frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JFrame frame2 = new JFrame();
-        frame2.getContentPane().setLayout(new FlowLayout());
-        frame2.getContentPane().add(new JLabel("Standard"));
-        frame2.getContentPane().add(new JLabel(new ImageIcon(standard)));
-        frame2.getContentPane().add(new JLabel("Highlighted"));
-        frame2.getContentPane().add(new JLabel(new ImageIcon(highlight)));
-        frame2.pack();
-        frame2.setVisible(true);
-        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        return standard;
+        return images;
     }
 
     /**
@@ -55,44 +38,52 @@ public class ImageFusion
      * @param colorReference2 the second image to be colorized
      * @return a colorized image created as explained by the description for this method
      */
-    public static BufferedImage colorize(BufferedImage colorReference1,BufferedImage colorReference2)
+    private static BufferedImage colorize(BufferedImage colorReference1,BufferedImage colorReference2)
     {
         int width = colorReference1.getWidth();
         int height = colorReference1.getHeight();
         BufferedImage colorized = new BufferedImage(width,height,colorReference1.getType());
 
-        for(int i=0; i<height; i++){
-
-            for(int j=0; j<width; j++){
-
+        for(int i=0; i<height; i++)
+        {
+            for(int j=0; j<width; j++)
+            {
                 Color c1 = new Color(colorReference1.getRGB(j, i));
                 int red1 = c1.getRed();
                 int green1 = c1.getGreen();
                 int blue1 = c1.getBlue();
+
                 Color c2 = new Color(colorReference2.getRGB(j, i));
                 int red2 = c2.getRed();
                 int green2 = c2.getGreen();
                 int blue2 = c2.getBlue();
-                red1 = ((red1-red2)/2)+red2;
-                green1 = ((green1-green2)/2)+green2;
-                blue1 = ((blue1-blue2)/2)+blue2;
+
+                red1 = ((red1 - red2)/2) + red2;
+                green1 = ((green1 - green2)/2) + green2;
+                blue1 = ((blue1 - blue2)/2) + blue2;
+
                 Color newColor = new Color(red1,green1,blue1);
-
                 colorized.setRGB(j,i,newColor.getRGB());
-
-                // 60, 67     60-67= -7     -7/2 = -4    -4+67 = 63
-                // 67, 60     67-60= 7      7/2 = 4       4 + 60 = 64
             }
         }
-
         return colorized;
     }
 
-    public static BufferedImage highlight(BufferedImage colorReference1, BufferedImage colorReference2)
+    /**
+     * highlight takes two images as input and returns a fused highlighted image that is constructed by finding the
+     * difference between the RGB values of a pixel in the first image and a pixel in the same location in image two.
+     * If the difference is above a certain threshold, the RGB value of the corresponding pixel in the highlighted image
+     * is set to pure red to stand out and highlight the major differences between image one and image two.
+     * The highlighted image is returned after it is finished.
+     * @param colorReference1 the first image to be highlighted
+     * @param colorReference2 the second image to be highlighted
+     * @return a highlighted image created as explained by the description for this method
+     */
+    private static BufferedImage highlight(BufferedImage colorReference1, BufferedImage colorReference2)
     {
         int width = colorReference1.getWidth();
         int height = colorReference1.getHeight();
-        BufferedImage colorized = new BufferedImage(width,height,colorReference1.getType());
+        BufferedImage highlighted = new BufferedImage(width,height,colorReference1.getType());
 
         for(int i=0; i<height; i++){
 
@@ -109,23 +100,22 @@ public class ImageFusion
                 int blue2 = c2.getBlue();
 
                 int redDiff = Math.abs(red1 - red2);
-                int redMedian = ((red1-red2)/2)+red2;
+                int redMedian = ((red1 - red2)/2) + red2;
                 int red = (redDiff > 100) ? 255 : red1;
 
                 int greenDiff = Math.abs(green1 - green2);
-                int greenMedian = ((green1-green2)/2)+green2;
+                int greenMedian = ((green1 - green2)/2) + green2;
                 int green = (greenDiff > 100) ? 0 : green1;
 
                 int blueDiff = Math.abs(blue1 - blue2);
-                int blueMedian = ((blue1-blue2)/2)+blue2;
+                int blueMedian = ((blue1 - blue2)/2) + blue2;
                 int blue = (blueDiff > 100) ? 0 : blue1;
 
                 Color newColor = new Color(red,green,blue);
-                colorized.setRGB(j,i,newColor.getRGB());
+                highlighted.setRGB(j,i,newColor.getRGB());
             }
         }
-        return colorized;
+        return highlighted;
     }
-
 }
 
