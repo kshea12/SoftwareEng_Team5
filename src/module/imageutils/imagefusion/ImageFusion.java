@@ -101,15 +101,15 @@ public class ImageFusion
 
                 int redDiff = Math.abs(red1 - red2);
                 int redMedian = ((red1 - red2)/2) + red2;
-                int red = (redDiff > 100) ? 255 : red1;
+                int red = (redDiff > 100) ? 255 : redMedian;
 
                 int greenDiff = Math.abs(green1 - green2);
                 int greenMedian = ((green1 - green2)/2) + green2;
-                int green = (greenDiff > 100) ? 0 : green1;
+                int green = (greenDiff > 100) ? 0 : greenMedian;
 
                 int blueDiff = Math.abs(blue1 - blue2);
                 int blueMedian = ((blue1 - blue2)/2) + blue2;
-                int blue = (blueDiff > 100) ? 0 : blue1;
+                int blue = (blueDiff > 100) ? 0 : blueMedian;
 
                 Color newColor = new Color(red,green,blue);
                 highlighted.setRGB(j,i,newColor.getRGB());

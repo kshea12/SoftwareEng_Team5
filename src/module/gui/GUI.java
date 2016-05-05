@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -105,7 +106,7 @@ public class GUI {
         // Save Standard Button
         saveStandardButton.setBounds(307, 70, 117, 29);
 
-        // Save Highlighted Button
+        // Save Highlight Button
         saveHighlightButton.setBounds(307, 114, 117, 29);
 
         // Progress Label
@@ -236,12 +237,21 @@ public class GUI {
      */
     private void setupMenu() {
         JMenu mFile = new JMenu("File");
-        mFile.setMnemonic('f');
-        ImageIcon iconNew = new ImageIcon("file_new.gif");
-        Action actionNew = new AbstractAction("New", iconNew) {
+        mFile.setMnemonic(KeyEvent.VK_F);
+        Action actionNew = new AbstractAction("New") {
             private static final long serialVersionUID = 1L;
             // create new instance of gui display
             public void actionPerformed(ActionEvent e) {
+                EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        try {
+                            GUI window = new GUI();
+                            window.frame.setVisible(true);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         };
         JMenuItem item = mFile.add(actionNew);
